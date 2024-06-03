@@ -1,4 +1,4 @@
-import livroDado from "../modelo/livro-dado";
+livroDado = require("../modelo/livro-dado");
 
 var express = require("express");
 var router = express.Router();
@@ -37,4 +37,4 @@ router.delete("/", (req, res) => {
     });
 });
 
-export default router;
+module.exports = router;

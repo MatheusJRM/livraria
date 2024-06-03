@@ -1,4 +1,4 @@
-import banco from "./conexao";
+banco = require("./conexao");
 
 const LivroSchema = banco.Schema({
   titulo: String,
@@ -9,4 +9,4 @@ const LivroSchema = banco.Schema({
 
 const Livro = banco.model("Livros", LivroSchema);
 
-export default Livro;
+module.exports = Livro;

@@ -8,4 +8,4 @@ const options = {
 
 banco.connect("mongodb://localhost:27017/livraria", options);
 
-export default banco;
+module.exports = banco;

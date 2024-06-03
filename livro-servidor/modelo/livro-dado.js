@@ -1,4 +1,4 @@
-import Livro from "./livro-schema";
+Livro = require("./livro-schema");
 
 const obterLivros = async () => {
   return await Livro.find();
@@ -12,7 +12,7 @@ const excluir = async (codigo) => {
   await Livro.deleteOne({ _id: codigo });
 };
 
-export default {
+module.exports = {
   obterLivros,
   incluir,
   excluir,
