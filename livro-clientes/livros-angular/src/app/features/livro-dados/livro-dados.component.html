@@ -1,0 +1,53 @@
+<main class="container-fluid p-3 flex-grow-1 d-flex flex-column">
+  <form [formGroup]="form" ngDefaultControl (submit)="incluir()">
+    <label class="form-label container-fluid" htmlFor="titulo">
+      <h1>Dados do Livro</h1>
+      Título
+      <input
+        id="titulo"
+        class="form-control"
+        formControlName="titulo"
+        required
+        type="text"
+      />
+    </label>
+    <label class="form-label container-fluid" htmlFor="resumo">
+      Resumo
+      <textarea
+        class="form-control"
+        formControlName="resumo"
+        aria-label="with textarea"
+        rows="{4}"
+        required
+      ></textarea>
+    </label>
+    <label class="form-label container-fluid" htmlFor="editora">
+      Editora
+      <select
+        class="form-select"
+        aria-label="Default select"
+        formControlName="cod_editora"
+        required
+      >
+        @for (opcao of editoras; track opcao.codEditora) {
+        <option value="{{ opcao.codEditora }}">{{ opcao.nome }}</option>
+        }
+      </select>
+    </label>
+    <label class="form-label container-fluid" htmlFor="autores">
+      Autores (1 por linha)
+      <textarea
+        class="form-control"
+        formControlName="autores"
+        aria-label="with textarea"
+        rows="{3}"
+        required
+      ></textarea>
+    </label>
+    <div class="form-label container-fluid mt-3">
+      <button class="btn btn-primary" type="submit" [disabled]="!form.valid">
+        Salvar Dados
+      </button>
+    </div>
+  </form>
+</main>

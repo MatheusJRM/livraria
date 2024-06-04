@@ -1,0 +1,45 @@
+<main
+  class="container-fluid p-3 flex-grow-1 d-flex flex-column justify-content-center align-items-start"
+>
+  <h1>Catálogo de Livros</h1>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr class="table-dark">
+          <th class="p-3" scope="col">Título</th>
+          <th class="p-3" scope="col">Resumo</th>
+          <th class="p-3" scope="col">Editora</th>
+          <th class="p-3" scope="col">Autores</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (livro of livros; track livro.codigo) {
+        <tr>
+          <td class="p-3">
+            <div class="d-flex flex-column">
+              {{ livro.titulo }}
+              <button
+                class="btn btn-danger mt-2"
+                (click)="excluir(livro.codigo)"
+              >
+                Excluir
+              </button>
+            </div>
+          </td>
+          <td class="p-3">{{ livro.resumo }}</td>
+          <td class="p-3">
+            {{ obterNome(livro.codEditora) }}
+          </td>
+          <td class="p-3">
+            <ul>
+              @for (autor of livro.autores; track $index) {
+              <li>{{ autor }}</li>
+              }
+            </ul>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</main>
