@@ -1,7 +1,7 @@
-import { ControleLivro, livrosMock } from "@/classes/controle/ControleLivros";
+import { ControleLivro } from "@/classes/controle/ControleLivros";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export const controleLivro = new ControleLivro(livrosMock);
+export const controleLivro = new ControleLivro();
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {

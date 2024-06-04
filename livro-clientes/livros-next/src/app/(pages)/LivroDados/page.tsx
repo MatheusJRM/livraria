@@ -2,27 +2,13 @@
 
 import { NextPage } from "next";
 import styles from "../../page.module.css";
-import { Livro } from "@/classes/modelo/Livro";
 import { controleEditora } from "@/pages/api/editoras";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Menu } from "@/componentes/Menu";
+import { ControleLivro } from "@/classes/controle/ControleLivros";
 
-const baseUrl = "http://localhost:3000/api/livros";
-
-const incluirLivro: (livro: Livro) => Promise<number | void> = async (
-  livro: Livro
-) => {
-  return await fetch(baseUrl, {
-    method: "POST",
-    body: JSON.stringify(livro),
-    headers: { "Content-Type": "application/json" },
-  })
-    .then((response) => response.status)
-    .catch((error) => {
-      console.log(error);
-    });
-};
+const controleLivros = new ControleLivro();
 
 const LivroDados: NextPage = () => {
   const opcoes = controleEditora.getEditoras().map((editora) => {
@@ -46,13 +32,13 @@ const LivroDados: NextPage = () => {
   const incluir = async (evento: React.ChangeEvent<HTMLFormElement>) => {
     evento.preventDefault();
     const livro = {
-      codigo: 0,
+      codigo: "",
       codEditora: codEditora,
       titulo: titulo,
       resumo: resumo,
       autores: autores.split("\n"),
     };
-    await incluirLivro(livro).then(() => router.push("/LivroLista"));
+    await controleLivros.incluir(livro).then(() => router.push("/LivroLista"));
   };
   return (
     <div className={styles.container}>

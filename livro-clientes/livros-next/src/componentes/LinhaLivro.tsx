@@ -3,7 +3,7 @@ import { Livro } from "@/classes/modelo/Livro";
 
 interface LinhaLivroProps {
   livro: Livro;
-  excluir: (codigo: number) => void;
+  excluir: (codigo: string) => void;
 }
 
 export const LinhaLivro: React.FC<LinhaLivroProps> = (props) => {

@@ -6,48 +6,22 @@ import { Livro } from "@/classes/modelo/Livro";
 import { useEffect, useState } from "react";
 import { Menu } from "@/componentes/Menu";
 import { LinhaLivro } from "@/componentes/LinhaLivro";
-
-const baseUrl = "http://localhost:3000/api/livros";
-
-const obter: () => Promise<Livro[]> = async () => {
-  return await fetch(baseUrl)
-    .then((response) => response.json())
-    .then((responseData) => responseData)
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
-const excluirLivro: (codigo: number) => Promise<number | void> = async (
-  codigo
-) => {
-  return await fetch(`${baseUrl}/${codigo}`, {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-  })
-    .then((response) => response.status)
-    .catch((error) => {
-      console.log(error);
-    });
-};
+import { ControleLivro } from "@/classes/controle/ControleLivros";
 
 const LivroLista: NextPage = () => {
+  const controleLivros = new ControleLivro();
   const [livros, setLivros] = useState<Livro[]>([]);
   const [carregado, setCarregado] = useState(false);
 
   useEffect(() => {
-    obterLivros();
-  }, [carregado]);
-
-  const obterLivros = async () => {
-    await obter().then((livros) => {
-      setLivros(livros);
+    controleLivros.obterLivros().then((response) => {
+      setLivros(response);
       setCarregado(true);
     });
-  };
+  }, [carregado]);
 
-  const excluir = async (codigo: number) => {
-    await excluirLivro(codigo).then(() => {
+  const excluir = async (codigo: string) => {
+    await controleLivros.excluir(codigo).then(() => {
       setCarregado(false);
     });
   };
@@ -76,12 +50,8 @@ const LivroLista: NextPage = () => {
               </tr>
             </thead>
             <tbody>
-              {livros?.map((livro) => (
-                <LinhaLivro
-                  key={livro.codigo}
-                  livro={livro}
-                  excluir={excluir}
-                />
+              {livros?.map((livro, index) => (
+                <LinhaLivro key={index} livro={livro} excluir={excluir} />
               ))}
             </tbody>
           </table>
