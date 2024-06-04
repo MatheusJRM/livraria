@@ -9,7 +9,7 @@ const incluir = async (livro) => {
 };
 
 const excluir = async (codigo) => {
-  await Livro.deleteOne({ codEditora: codigo });
+  await Livro.deleteOne({ _id: codigo });
 };
 
 module.exports = {
