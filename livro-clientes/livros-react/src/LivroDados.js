@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { ControleEditora, editorasMock } from "./controle/ControleEditora";
-import { ControleLivro, livrosMock } from "./controle/ControleLivros";
+import { ControleLivro } from "./controle/ControleLivros";
 import { useNavigate } from "react-router-dom";
 
 export default function LivroDados() {
   const controleEditora = new ControleEditora(editorasMock);
-  const controleLivro = new ControleLivro(livrosMock);
+  const controleLivro = new ControleLivro();
 
   const opcoes = controleEditora.getEditoras().map((editora) => {
     return {
@@ -28,14 +28,15 @@ export default function LivroDados() {
   const incluir = (evento) => {
     evento.preventDefault();
     const livro = {
-      codigo: 0,
+      codigo: "",
       codEditora: codEditora,
       titulo: titulo,
       resumo: resumo,
       autores: autores.split("\n"),
     };
-    controleLivro.incluir(livro);
-    navigate("/");
+    controleLivro.incluir(livro).then(() => {
+      navigate("/");
+    });
   };
 
   return (

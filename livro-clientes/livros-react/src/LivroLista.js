@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ControleLivro, livrosMock } from "./controle/ControleLivros";
+import { ControleLivro } from "./controle/ControleLivros";
 import { ControleEditora, editorasMock } from "./controle/ControleEditora";
 
 function LinhaLivro({ livro, excluir }) {
@@ -35,16 +35,19 @@ function LinhaLivro({ livro, excluir }) {
 export default function LivroLista() {
   const [livros, setLivros] = useState([]);
   const [carregado, setCarregado] = useState(false);
-  const controleLivro = new ControleLivro(livrosMock);
+  const controleLivro = new ControleLivro();
 
   useEffect(() => {
-    setLivros(controleLivro.obterLivros());
+    controleLivro.obterLivros().then((response) => {
+      setLivros(response);
+    });
     setCarregado(true);
   }, [carregado]);
 
   const excluir = (codigoLivro) => {
-    controleLivro.excluir(codigoLivro);
-    setCarregado(false);
+    controleLivro.excluir(codigoLivro).then(() => {
+      setCarregado(false);
+    });
   };
 
   return (
@@ -69,8 +72,8 @@ export default function LivroLista() {
             </tr>
           </thead>
           <tbody>
-            {livros?.map((livro) => (
-              <LinhaLivro key={livro.codigo} livro={livro} excluir={excluir} />
+            {livros?.map((livro, index) => (
+              <LinhaLivro key={index} livro={livro} excluir={excluir} />
             ))}
           </tbody>
         </table>
