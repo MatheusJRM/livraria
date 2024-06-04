@@ -7,10 +7,15 @@ var app = express();
 
 app.use(bodyParser.json());
 
-const livros = livroDado.obterLivros();
-
-router.get("/", (req, res) => {
-  res.json(livros);
+router.get("/", (_, res) => {
+  livroDado
+    .obterLivros()
+    .then((values) => res.status(200).json(values))
+    .catch(() => {
+      res
+        .status(400)
+        .json({ message: "Não foi possível visualizar a lista de livros." });
+    });
 });
 
 router.post("/", (req, res) => {
@@ -19,20 +24,20 @@ router.post("/", (req, res) => {
     .then(() => {
       res.status(201).json({ message: "Livro adicionado com sucesso!" });
     })
-    .catch((err) => {
+    .catch(() => {
       res
         .status(400)
         .json({ message: "Não foi possível salvar o novo livro." });
     });
 });
 
-router.delete("/", (req, res) => {
+router.delete("/:codigo", (req, res) => {
   livroDado
-    .excluir(req.params)
+    .excluir(req.params.codigo)
     .then(() => {
       res.status(204).json({ message: "Livro excluído com sucesso!" });
     })
-    .catch((err) => {
+    .catch(() => {
       res.status(400).json({ message: "Não foi possível excluir o livro." });
     });
 });
