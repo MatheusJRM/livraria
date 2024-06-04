@@ -6,9 +6,9 @@ Os 3 projetos Web foram construidos em React, Next-React e Angular anteriormente
 
 ## Funcionalidades
 
-- Listar produtos
-- Criar um novo produto
-- Excluir um produto
+- Listar livros
+- Criar um novo livro
+- Excluir um livro
 
 ## Linguagens e Tecnologias Utilizadas
 - MongoDB (compass)
